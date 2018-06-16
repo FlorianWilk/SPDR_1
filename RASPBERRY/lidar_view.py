@@ -3,34 +3,25 @@ import serial
 import time
 import Adafruit_SSD1306
 from PIL import Image, ImageDraw, ImageFont
-# Raspberry Pi pin configuration:
+
 RST = None
-# Note the following are only used with SPI:
 DC = 23
-x=5
-top=4
+x=0
+top=0
 SPI_PORT = 0
 SPI_DEVICE = 0
 disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
 disp.begin()
 disp.clear()
-# Clear display.
-disp.clear()
-disp.display()
  
-# Create blank image for drawing.
-# Make sure to create image with mode '1' for 1-bit color.
 width = disp.width
 height = disp.height
 image = Image.new('1', (width, height))
  
-# Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
- 
-# Draw a black filled box to clear the image.
 draw.rectangle((0,0,width,height), outline=0, fill=0)
 font = ImageFont.load_default()
-   # Draw a black filled box to clear the image.
+
 if True:
     draw.rectangle((0,0,width,height), outline=0, fill=0)
  
@@ -46,24 +37,24 @@ if True:
  
     # Write two lines of text.
  
-    draw.text((x, top),       "IP: " + str(IP),  font=font, fill=255)
-    draw.text((x, top+8),     str(CPU), font=font, fill=255)
-    draw.text((x, top+16),    str(MemUsage),  font=font, fill=255)
-    draw.text((x, top+25),    str(Disk),  font=font, fill=255)
+    draw.text((x, top),       str(IP) + " "+str(CPU),  font=font, fill=255)
+//    draw.text((x, top+16),    str(MemUsage),  font=font, fill=255)
+//    draw.text((x, top+25),    str(Disk),  font=font, fill=255)
  
     # Display image.
     disp.image(image)
     disp.display()
     time.sleep(.1)
-s = serial.Serial('/dev/ttyS0', 9600) # Namen ggf. anpassen
+
+// TODO: try 38400 Baud
+s = serial.Serial('/dev/ttyS0', 9600) # Connect to our Arduino Mega 
 s.close()
 s.open()
-time.sleep(5) # der Arduino resettet nach einer Seriellen Verbindung, daher muss kurz gewartet werden
+time.sleep(5) # Arduino does a reset after a serial connection, so lets wait some secs
  
 s.write("S")
 try:
     while True:
-#	s.write("wuwu")
         response = s.readline()
         print(response)
 	if response == "*UP\r\n":
