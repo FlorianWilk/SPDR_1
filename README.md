@@ -64,6 +64,15 @@ to your Raspberry PI:
 Connect to your Raspberry (how? -> google) and open up raspi-config to disable Console over Serial but leave Serial Hardware on - Advanced Settings somewhere
 Otherwise you won't be able to communicate over the raspberry's serial (TX/RX) with the Arduino Board
 
+Clone the repository to your Raspberry in users home folder.
+then do a
 
+sudo nano /etc/rc.local
+
+and add
+
+python /home/pi/SPDR_1/RASPBERRY/lidar_view.py
+
+this will show up the data from the LIDAR on every start of the RPI.
   
   
