@@ -30,10 +30,25 @@ We will use diffenent types of software and programming languages when realizing
   solutions for quite complicate problems such as SLAM (simultanous locating and mapping) - in our case using a 360° LIDAR (light/laser based range detection) and a wide angle camera.
   
   
-Building it
+## Building it
 
-### 1. Build up the Freenove Robot Kit. Calibrate it and start playing with it. This will take you some time.. :)
-### 2. Welcome back. Now the custom part:
+First of all, build up the Freenove Robot Kit. Calibrate it and start playing with it. This will take you some time.. :)
+..Welcome back. Now the custom part:
+
+### Arduino Mega - The Bodymovement-Controller
+
+While playing around you will have notived, that the bodymovements are nice but not very natural. and you cannot move/rotate the body while crawling around. that made me sad. we want to create a very natural-style creature which is able to move/rotate its body while moving around. So we need to modify the manufacturer's software-stack. 
+The programs for Arduino Boards are commonly written in Arduino IDE / Processing Language, but the libraries it uses are written in c++. The standard-library here is FNQR, the Freenove Quaduped Robot Library.
+You will find the Libary-files in <Arduino-Dir>/libaries/FNQR. 
+
+I am currently modifying this stack. You will find the files in the ARDUINO/ folder of this repository.
+Clone it and copy the SPDR_1 Folder in ARDUINO/ to your existing <Arduino-Dir>/Libaries folder, next to FNQR.
+
+Now open the SPDR_1.ino file in ARDUINO/ with the Arduino IDE. Connect your bot and upload it.
+
+Yay, our robot now has a "brain" for bodymovements. Now we need the "brain" to control all this and react on its environment.
+
+### Raspberry - Let's connect the stuff
 
 Download the ROSBots Raspberry Image and put it on the SD-Card. There are sooo many tutorials on how to do this, so i won't go into detail here.
 The Rosbots Image already has ROS and OpenCV installed, which is very useful. You'll know if you ever tried to install ROS and OpenCV on a Raspberry by yourself ;)
