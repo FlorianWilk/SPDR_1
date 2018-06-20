@@ -18,7 +18,8 @@ Hardware:
 The Freenove Robot Kit is a perfect start for building up a small autonomous robot. We could make it much more easier by using
 a wheel based bot, but i love this creepy spider-style when it crawles around. 
 
-![Freenove] (http://www.freenove.com/images/logo2.png)
+![Freenove]
+(http://www.freenove.com/images/logo2.png)
 
 
 The Kit provides an Arduino Mega Controller Board which with Servo-Controllers onBoard. 
