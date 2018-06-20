@@ -18,10 +18,12 @@ Hardware:
 The Freenove Robot Kit is a perfect start for building up a small autonomous robot. We could make it much more easier by using
 a wheel based bot, but i love this creepy spider-style when it crawles around. 
 
+[logo]: https://avatars0.githubusercontent.com/u/16573434?s=400&v=4 "Freenove"
+
+
 The Kit provides an Arduino Mega Controller Board which with Servo-Controllers onBoard. 
 We will use this Board - as it is by default - as Controller-Board for all the body movement. 
-But we will kick away the manufacturers SoftwareStack and replace it by a much more cooler one, which will make
-our robot act much more natural and veeery creepy.
+We will modify/replace the Freenove Software to make our robot act much more natural and veeery creepy.
 
 We will use diffenent types of software and programming languages when realizing all this:
 
