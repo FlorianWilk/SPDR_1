@@ -41,12 +41,12 @@ First of all, build up the Freenove Robot Kit. Calibrate it and start playing wi
 
 ### Arduino Mega - The Bodymovement-Controller
 
-While playing around you will have notived, that the bodymovements are nice but not very natural. and you cannot move/rotate the body while crawling around. that made me sad. we want to create a very natural-style creature which is able to move/rotate its body while moving around. So we need to modify the manufacturer's software-stack. 
-The programs for Arduino Boards are commonly written in Arduino IDE / Processing Language, but the libraries it uses are written in c++. The standard-library here is FNQR, the Freenove Quaduped Robot Library.
+While playing around you will have noticed, that the bodymovements are nice but not very natural. and you cannot move/rotate the body while crawling around. that made me sad. we want to create a very natural-style creature which is able to move/rotate its body while moving around. So we need to modify the manufacturer's software-stack. 
+The programs for Arduino Boards are commonly written in Arduino IDE / Processing Language, but the libraries it uses are written in C++. The standard-library here is FNQR, the Freenove Quaduped Robot Library.
 You will find the Libary-files in <Arduino-Dir>/libaries/FNQR. 
 
 I am currently modifying this stack. You will find the files in the ARDUINO/ folder of this repository.
-Clone it and copy the SPDR_1 Folder in ARDUINO/ to your existing <Arduino-Dir>/Libaries folder, next to FNQR.
+Clone it and copy the SPDR_FNQR Folder in ARDUINO/ to your existing <Arduino-Dir>/Libaries folder, next to FNQR.
 
 Now open the SPDR_1.ino file in ARDUINO/ with the Arduino IDE. Connect your bot and upload it.
 
