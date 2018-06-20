@@ -2,6 +2,8 @@
 
 SPiDeR ONE - building an autonomous quadruped "drone" using SLAM to locate itself in an unknown environment.
 
+![SPDR_ONE](IMG_20180616_164342800.jpg)
+
 Hardware:
   - Freenove Quadruped Robot Kit including acrylic parts, servos and the Arduino Mega Servo-Board. 100€
   - a Raspberry PI Zero W - 30€
