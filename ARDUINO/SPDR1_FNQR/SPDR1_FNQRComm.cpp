@@ -15,9 +15,8 @@ Communication* communication = NULL;
 
 Communication::Communication() {}
 
-void Communication::Start(bool commFunction)
+void Communication::Start()
 {
-  this->commFunction = commFunction;
 
   StartStateLed();
 
@@ -28,34 +27,59 @@ void Communication::Start(bool commFunction)
   FlexiTimer2::set(20, UpdateService);
   FlexiTimer2::start();
 
-  if (commFunction)
-  {
-    StartPins();
-    StartSerial();
-    StartRF24();
-    StartESP8266();
 
     SetRobotBootState(GetRobotBootState());
-  }
 
   if (robotAction.robot.power.powerGroupAutoSwitch)
     delay(1000);
 }
 
-void Communication::SetWiFi(String name, String password)
+
+void Communication::ActiveMode()
 {
-  esp8266SSID = name;
-  esp8266PWD = password;
+    robotAction.ActiveMode();
 }
 
-void Communication::SetRC(byte byte0, byte byte1, byte byte2, byte byte3, byte byte4)
+void Communication::SleepMode()
 {
-  rf24Address[0] = byte0;
-  rf24Address[1] = byte1;
-  rf24Address[2] = byte2;
-  rf24Address[3] = byte3;
-  rf24Address[4] = byte4;
+    robotAction.SleepMode();
 }
+
+void Communication::SwitchMode()
+{
+    robotAction.SwitchMode();
+}
+
+void Communication::CrawlForward()
+{
+    robotAction.CrawlForward();
+}
+
+void Communication::CrawlBackward()
+{
+    robotAction.CrawlBackward();
+}
+
+void Communication::TurnLeft()
+{
+    robotAction.TurnLeft();
+}
+
+void Communication::TurnRight()
+{
+    robotAction.TurnRight();
+}
+
+void Communication::MoveBody(float x, float y, float z)
+{
+    robotAction.MoveBody(x, y, z);
+}
+
+void Communication::RotateBody(float x, float y, float z, float angle)
+{
+    robotAction.RotateBody(x, y, z, angle);
+}
+
 
 void Communication::StartStateLed()
 {
@@ -109,77 +133,6 @@ void Communication::UpdateSerial()
   {
     HandleOrder(serialInData, OrderSource::FromSerial);
     serialInDataCounter = 0;
-  }
-}
-
-void Communication::StartRF24()
-{
-  isRF24Available = rf24.begin();
-  if (!isRF24Available)
-    return;
-  rf24.setPALevel(RF24_PA_LOW);
-  rf24.setDataRate(RF24_1MBPS);
-  rf24.setRetries(0, 15);
-  rf24.openWritingPipe(rf24Address);
-  rf24.openReadingPipe(1, rf24Address);
-  rf24.startListening();
-}
-
-void Communication::UpdateRF24()
-{
-  if (!isRF24Available)
-    return;
-
-  for (int index = 0; index < inDataSize; index++)
-    rf24InData[index] = 0;
-
-  if (rf24.available())
-  {
-    rf24.read(rf24InData, inDataSize);
-
-    for (int index = 0; index < inDataSize; index++)
-    {
-      if (rf24InData[index] == Orders::transStart)
-      {
-        if (rf24InData[index + 1] != Orders::requestEcho)
-          HandleOrder(rf24InData + index, OrderSource::FromRF24);
-      }
-    }
-  }
-}
-
-void Communication::StartESP8266()
-{
-  if (esp8266.kick())
-    if (esp8266.setOprToSoftAP())
-      if (esp8266.setSoftAPParam(esp8266SSID, esp8266PWD))
-        if (esp8266.enableMUX())
-          if (esp8266.startTCPServer(esp8266Port))
-            if (esp8266.setTCPServerTimeout(0))
-            {
-              isESP8266Available = true;
-              return;
-            }
-  isESP8266Available = false;
-}
-
-void Communication::UpdateESP8266()
-{
-  if (!isESP8266Available)
-    return;
-
-  for (int index = 0; index < inDataSize; index++)
-    esp8266InData[index] = 0;
-
-  esp8266InDataCounter = esp8266.recv(&esp8266ClientID, esp8266InData, inDataSize, 2);
-
-  if (esp8266InDataCounter > 0)
-  {
-    for (int index = 0; index < inDataSize; index++)
-    {
-      if (esp8266InData[index] == Orders::transStart)
-        HandleOrder(esp8266InData + index, OrderSource::FromESP8266);
-    }
   }
 }
 
@@ -263,24 +216,13 @@ void Communication::HandleOrder(byte inData[], OrderSource orderSource)
 
   if (orderSource == OrderSource::FromSerial)
     Serial.write(outData, outDataCounter);
-  else if (orderSource == OrderSource::FromESP8266)
-  {
-    if (inData[1] != Orders::requestMoveBodyTo && inData[1] != Orders::requestRotateBodyTo)
-      esp8266.send(esp8266ClientID, outData, outDataCounter);
-  }
+
 }
 
 void Communication::UpdateCommunication()
 {
   UpdateStateLED();
 
-  if (commFunction)
-  {
-    UpdateSerial();
-    UpdateRF24();
-    UpdateESP8266();
-    CheckBlockedOrder();
-  }
 }
 
 void Communication::UpdateOrder()
@@ -452,8 +394,6 @@ void Communication::CheckBlockedOrder()
 
   if (orderSource == OrderSource::FromSerial)
     Serial.write(outData, outDataCounter);
-  else if (orderSource == OrderSource::FromESP8266)
-    esp8266.send(esp8266ClientID, outData, outDataCounter);
 
   orderState = OrderState::ExecuteNone;
 }

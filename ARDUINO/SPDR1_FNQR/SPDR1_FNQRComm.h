@@ -14,25 +14,30 @@
 #include "SPDR1_FNQROrders.h"
 
 #include <SPI.h>
-#include "RF24.h"
-
-#include "ESP8266.h"
 
 class Communication
 {
 public:
   Communication();
-  void Start(bool commFunction = true);
+  void Start();
 
-  void SetWiFi(String name, String password);
-  void SetRC(byte byte0, byte byte1, byte byte2, byte byte3, byte byte4);
 
   void UpdateCommunication();
   void UpdateOrder();
 
   RobotAction robotAction;
-  bool commFunction;
 
+    void ActiveMode();
+    void SleepMode();
+    void SwitchMode();
+    void CrawlForward();
+    void CrawlBackward();
+    void TurnLeft();
+    void TurnRight();
+    void MoveBody(float x, float y, float z);
+    void RotateBody(float x, float y, float z, float angle);
+
+    float GetSupplyVoltage();
 private:
   volatile byte blockedOrder = 0;
   volatile byte dynamicOrder = 0;
@@ -54,7 +59,6 @@ private:
   void SetStateLed(bool state);
   void ReverseStateLed();
 
-  float GetSupplyVoltage();
 
   const int pins[8] = { 20,21,A0,A1,15,14,2,3 };
 
@@ -68,26 +72,7 @@ private:
   void StartSerial();
   void UpdateSerial();
 
-  RF24 rf24 = RF24(9, 53);
-  byte rf24Address[6] = { 'F', 'N', 'K', '2', '7' };
-  bool isRF24Available = false;
-  byte rf24InData[inDataSize];
-  byte rf24InDataCounter = 0;
 
-  void StartRF24();
-  void UpdateRF24();
-
-  String esp8266SSID = "Freenove Quadruped Robot";
-  String esp8266PWD = "Freenove";
-  const unsigned long esp8266Port = 65535;
-  ESP8266 esp8266 = ESP8266(Serial2, 115200);
-  bool isESP8266Available = false;
-  byte esp8266ClientID;
-  byte esp8266InData[inDataSize];
-  byte esp8266InDataCounter = 0;
-
-  void StartESP8266();
-  void UpdateESP8266();
 
   enum OrderSource { FromSerial, FromRF24, FromESP8266, FromNone };
   OrderSource orderSource = OrderSource::FromNone;
