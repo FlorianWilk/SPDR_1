@@ -14,11 +14,9 @@ Hardware:
   - at least 2x (i use 4x+) 14500 750mAh Batteries - don't try to use standard batteries 
   - cables and some soldering tools
   
-  - in my case i use cablebinder and rubberbands to "fix" the LIDAR and all the other parts on the chassis, BUT
-  we will try to create a custom chassis for all this in a next part i guess :)
+  - in my case i use cablebinder and rubberbands to attach the LIDAR and all the other parts on the chassis.
  
-The Freenove Robot Kit is a perfect start for building up a small autonomous robot. We could make it much more easier by using
-a wheel based bot, but i love this creepy spider-style when it crawles around. 
+The Freenove Robot Kit is a perfect start for building up a small autonomous robot. We could make it much more easier by using a wheel based bot, but i love this creepy spider-style when it crawles around. 
 
 ![Freenove](http://www.freenove.com/images/logo2.png)
 
@@ -54,13 +52,10 @@ Yay, our robot now has a "brain" for bodymovements. Now we need the "brain" to c
 
 ### Raspberry - Let's connect the stuff
 
-Download the ROSBots Raspberry Image and put it on the SD-Card. There are sooo many tutorials on how to do this, so i won't go into detail here.
-The Rosbots Image already has ROS and OpenCV installed, which is very useful. You'll know if you ever tried to install ROS and OpenCV on a Raspberry by yourself ;)
+Prepare your Raspberry by installing the OS and ROS afterwards. 
+You can find a detailed description here http://sar-lab.net/teaching/ros-kinetic-on-raspbian-stretch-for-raspberry-pi-3/
 
-https://github.com/ROSbots/rosbots_setup_tools#use-our-existing-rosbots-raspbianrosopencv-image-after-youve-downloaded-it
-https://medium.com/@rosbots/ready-to-use-image-raspbian-stretch-ros-opencv-324d6f8dcd96
-
-Let's connect the Raspberry PI Zero W to the Arduino Mega Board so the Raspberry can control it.
+Let's connect the Raspberry PI Zero W to the Arduino Mega Board so the PI can control it.
 On the Freenove Arduino Mega Board we have a pinboard. We are interested in 5V, GND, RX3 and TX3. Put in some (4:)) cables and connect them
 to your Raspberry PI:
 
