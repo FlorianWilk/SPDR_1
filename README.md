@@ -1,6 +1,7 @@
 # SPDR_1
 
-SPiDeR ONE - building an autonomous quadruped "drone" using SLAM to locate itself in an unknown environment.
+SPiDeR ONE - prototype of an autonomous robot which uses 
+a combination of Hector-SLAM/OctoMapping and Kalman-Filters to navigate in unknown environments.  
 
 ![SPDR_ONE](IMG_20180616_164342800.jpg)
 
@@ -11,6 +12,7 @@ Hardware:
   - SD-Card - i use 32GB - ?
   - SSD1306 OLED Display - 8€
   - RPLIDAR A1 - 100€
+  - MPU 9250 - gyro, accel, compass 
   - at least 2x (i use 4x+) 14500 750mAh Batteries - don't try to use standard batteries 
   - cables and some soldering tools
   
@@ -35,46 +37,6 @@ We will use diffenent types of software and programming languages when realizing
 ## Building it
 
 First of all, build up the Freenove Robot Kit. Calibrate it and start playing with it. This will take you some time.. :)
-..Welcome back. Now the custom part:
+Now the custom part:
 
-### Arduino Mega - The Bodymovement-Controller
-
-While playing around you will have noticed, that the bodymovements are nice but not very natural. and you cannot move/rotate the body while crawling around. that made me sad. we want to create a very natural-style creature which is able to move/rotate its body while moving around. So we need to modify the manufacturer's software-stack. 
-The programs for Arduino Boards are commonly written in Arduino IDE / Processing Language, but the libraries it uses are written in C++. The standard-library here is FNQR, the Freenove Quaduped Robot Library.
-You will find the Libary-files in <Arduino-Dir>/libaries/FNQR. 
-
-I am currently modifying this stack. You will find the files in the ARDUINO/ folder of this repository.
-Clone it and copy the SPDR_FNQR Folder in ARDUINO/ to your existing <Arduino-Dir>/Libaries folder, next to FNQR.
-
-Now open the SPDR_1.ino file in ARDUINO/ with the Arduino IDE. Connect your bot and upload it.
-
-Yay, our robot now has a "brain" for bodymovements. Now we need the "brain" to control all this and react on its environment.
-
-### Raspberry - Let's connect the stuff
-
-Prepare your Raspberry by installing the OS and ROS afterwards. 
-You can find a detailed description here http://sar-lab.net/teaching/ros-kinetic-on-raspbian-stretch-for-raspberry-pi-3/
-
-Let's connect the Raspberry PI Zero W to the Arduino Mega Board so the PI can control it.
-On the Freenove Arduino Mega Board we have a pinboard. We are interested in 5V, GND, RX3 and TX3. Put in some (4:)) cables and connect them
-to your Raspberry PI:
-
-5V to Raspberry 5V, GND to Raspberry GND, TX3 to Raspberry RX, RX3 to Raspberry TX
-
-(include picture)
-
-Connect to your Raspberry (how? -> google) and open up raspi-config to disable Console over Serial but leave Serial Hardware on - Advanced Settings somewhere
-Otherwise you won't be able to communicate over the raspberry's serial (TX/RX) with the Arduino Board
-
-Clone the repository to your Raspberry in users home folder.
-then do a
-
-sudo nano /etc/rc.local
-
-and add
-
-python /home/pi/SPDR_1/RASPBERRY/lidar_view.py
-
-this will show up the data from the LIDAR on every start of the RPI.
-  
-  
+<to be done>
